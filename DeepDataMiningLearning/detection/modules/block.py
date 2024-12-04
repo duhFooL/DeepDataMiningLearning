@@ -131,6 +131,7 @@ class Conv(nn.Module):
 
     def forward(self, x):
         """Apply convolution, batch normalization and activation to input tensor."""
+        print(f'HERE: {type(x)}')
         return self.act(self.bn(self.conv(x)))
 
     def fuseforward(self, x):

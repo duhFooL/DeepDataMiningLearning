@@ -216,6 +216,12 @@ def create_detectionmodel(modelname, num_classes=None, trainable_layers=0, ckpt_
         model, preprocess, classes=create_yolomodel(modelname, num_classes, ckpt_file, fp16, device, scale)
         model= freeze_yolomodel(model, freeze=[])
         #ckpt file is already loaded in create_yolomodel
+    elif modelname.startswith('myyolo'):
+        print('MY YOLO proving I got here, but need to figure out the parameters')
+        
+        model, preprocess, classes=create_yolomodel(modelname, num_classes, ckpt_file, fp16, device, scale)
+        model= freeze_yolomodel(model, freeze=[])
+        #ckpt file is already loaded in create_yolomodel
     else:
         print('Model name not supported')
 

@@ -110,6 +110,10 @@ class YoloDetectionModel(nn.Module):
             preds = self._predict_once(x) #tensor input
             return preds #training mode, direct output x (three items)
         else: #inference mode
+            print(f'HERE 2: {type(x)}')
+            if type(x) is list:
+                print('HERE 3')
+                x = x[0]
             preds, xtensors = self._predict_once(x) #tensor input #[1, 3, 256, 256]
             #y,x output in inference mode, training mode, direct output x (three items),
             return preds
@@ -480,11 +484,15 @@ import torchvision
 
 def create_yolomodel(modelname, num_classes = None, ckpt_file = None, fp16 = False, device = 'cuda:0', scale='n'):
     
-    modelcfg_file=os.path.join('./DeepDataMiningLearning/detection/modules', modelname+'.yaml')
-    cfgPath='./DeepDataMiningLearning/detection/modules/default.yaml'
+    #modelcfg_file=os.path.join('./DeepDataMiningLearning/detection/modules/', modelname+'.yaml')
+    #cfgPath='./DeepDataMiningLearning/detection/modules/default.yaml'
+    modelcfg_file=os.path.join('./modules/', modelname+'.yaml')
+    cfgPath='./modules/default.yaml'
     myyolo = None
     preprocess =None
     classesList = None
+    print(f'config path: {cfgPath}')
+    print(f'model file: {modelcfg_file}')
     if os.path.exists(modelcfg_file) and os.path.exists(cfgPath):
         DEFAULT_CFG_DICT = load_defaultcfgs(cfgPath)
         classes=DEFAULT_CFG_DICT['names']
